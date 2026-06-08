@@ -36,7 +36,7 @@ function describeError(err) {
 }
 
 const borked = (reason) =>
-  `Something is borked (${reason}) - failed to generate text.`;
+  `Something is borked - failed to generate text. (Error: ${reason})`;
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const PROMPT_PATH = join(__dirname, "system-prompt.md");
