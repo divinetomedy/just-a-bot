@@ -26,8 +26,13 @@ function describeError(err) {
     529: "Anthropic overloaded",
   };
   if (err?.status && byStatus[err.status]) return byStatus[err.status];
+  if (err?.status) return `HTTP ${err.status}`;
   if (err?.name?.includes("Connection")) return "connection failed";
-  return err?.name || err?.message || "unknown error";
+  // Unmapped (no HTTP status) — usually a config/runtime error like a missing
+  // API key or a missing file. Surface code/message so it's self-diagnosing.
+  if (err?.code) return String(err.code);
+  if (err?.message) return String(err.message).slice(0, 140);
+  return err?.name || "unknown error";
 }
 
 const borked = (reason) =>
