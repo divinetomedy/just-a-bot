@@ -56,7 +56,7 @@ export default function App() {
       <header className="text-center">
         <h1 className="text-3xl font-bold tracking-tight">JUST A BOT</h1>
         <p className="mt-2 text-muted-foreground">
-          An AI encyclopedia for kids. No person or parasocial relationships in here.
+          An AI encyclopedia for kids. NON-personal, NON-relational, NON-parasocial, NON-engagement-driven. Just clean answers.
         </p>
       </header>
 
