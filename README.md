@@ -1,49 +1,52 @@
 # JUST A BOT
 
-A non-personified, child-safe AI assistant. **Milestone 1 (POC)** in progress — see [milestone-1-plan.md](milestone-1-plan.md). Product spec: [product-spec.md](product-spec.md).
+A deliberately **non-personified** AI encyclopedia for kids. It answers questions but never acts like a person: no first-person voice, no feelings or opinions, no friendship or companionship. Asked about itself, it replies **"This is just a bot"** and redirects to the topic.
 
-## Run locally
+This repo is **Milestone 1 — a proof of concept** of that voice. The full product vision (defense-in-depth safety, crisis handling, parent visibility, etc.) lives in [product-spec.md](product-spec.md); the current milestone's scope is in [milestone-1-plan.md](milestone-1-plan.md).
+
+## Quick start
 
 ```bash
 npm install
-cp .env.example .env   # add your ANTHROPIC_API_KEY
-npm run dev            # backend on :3001, frontend on :5173
+cp .env.example .env   # set ANTHROPIC_API_KEY
+npm run dev            # frontend :5173, backend :3001
 ```
 
-Open http://localhost:5173. The frontend proxies `/api/chat` to the backend, so the API key never reaches the browser.
+Open http://localhost:5173.
 
-## Layout
+## How it works
 
-- `server/chat-core.js` — the chat logic (validation, capped history, model call). Shared by both runtimes.
-- `server/index.js` — Express dev server; exposes `POST /api/chat` locally.
-- `api/chat.js` — Vercel serverless function; the production `POST /api/chat`.
-- `server/system-prompt.md` — the system prompt, versioned and editable on its own.
-- `src/` — React (Vite) chat UI with the persistent "this is AI, not a person" banner.
+The whole point is that **the API key and all logic stay server-side** — the frontend is a thin window.
 
-## Deploy (Vercel)
+```
+browser (React)  →  POST /api/chat  →  Claude (Haiku 4.5)
+                     ↑ holds the key, sends the system prompt + capped history
+```
 
-The app is a static Vite frontend (`dist/`) + a serverless function (`api/chat.js`). The API key lives only as a Vercel environment variable — never in the repo.
+- **`server/chat-core.js`** — all the chat logic: input validation, history capping (last 20 turns, no persistence), the model call, and granular error messages. Shared by both runtimes below.
+- **`server/index.js`** — Express server for **local dev** (`/api/chat`).
+- **`api/chat.js`** — the **production** `/api/chat` as a Vercel serverless function. Thin wrapper over `chat-core`.
+- **`server/system-prompt.md`** — the system prompt, kept as its own file so it can be versioned and reviewed independently. Re-read on every request, so edits apply on the next message with no restart.
+- **`src/`** — React (Vite) chat UI: minimal, mobile-first, with the persistent "this is AI, not a person" line and markdown-rendered replies.
 
-1. **Import the repo:** at [vercel.com/new](https://vercel.com/new), import the GitHub repo. Vercel auto-detects Vite (build `vite build`, output `dist/`) and the `api/` function — no config needed beyond `vercel.json` (already in the repo, to bundle `system-prompt.md` with the function).
-2. **Set the env var:** Project → Settings → Environment Variables → add `ANTHROPIC_API_KEY` (Production + Preview). Redeploy if you add it after the first build.
-3. **Deploy** — every push to `main` auto-deploys; PRs get preview URLs.
+The model is **Claude Haiku 4.5** (fast/cheap, set in `chat-core.js`). There is no database, no auth, and no cross-session memory by design.
 
-### Custom domain (just-a-bot.com via Squarespace)
+## Deploy
 
-1. In Vercel: Project → Settings → **Domains** → add `just-a-bot.com` and `www.just-a-bot.com`. Vercel shows the exact DNS records to create.
-2. In Squarespace: **Domains → just-a-bot.com → DNS settings** (Squarespace Domains, formerly Google Domains). Add the records Vercel gave you — typically:
-   - Apex `just-a-bot.com`: an **A** record → `76.76.21.21`
-   - `www`: a **CNAME** → `cname.vercel-dns.com`
-   Use whatever Vercel displays; it's authoritative. (Don't use Squarespace's "connect a site" flow — you're pointing DNS at Vercel, not building a Squarespace site.)
-3. Wait for DNS to propagate (minutes to a couple hours). Vercel auto-provisions HTTPS once the records resolve.
+Hosted on **Vercel**, connected to this repo — every push to `main` auto-deploys, PRs get preview URLs. The only required config is the **`ANTHROPIC_API_KEY`** environment variable (Settings → Environment Variables, Production + Preview); env-var changes need a redeploy to take effect. `vercel.json` bundles the system-prompt file with the function. Custom domain and DNS are already configured.
 
 ## Status
 
-- [x] **1. Scaffold** — repo, `/api/chat` endpoint, env-based key, chat UI + disclosure banner.
-- [x] **2. Model integration** — calls Claude Haiku 4.5, capped history, no persistence.
-- [~] **3. System prompt v1** — non-personification + "This is just a bot" framing; iterating.
-- [ ] 4. First-person guard
-- [ ] 5. Probe suite
-- [ ] 6. Polish & demo
+**Milestone 1 (this repo):**
 
-Infra: deployable to Vercel (static frontend + `api/chat` serverless function).
+- [x] Scaffold — `/api/chat`, env-based key, chat UI + AI-disclosure line
+- [x] Model integration — Claude Haiku 4.5, capped history, no persistence
+- [x] Deploy — Vercel + custom domain
+- [~] System prompt v1 — non-personification + "This is just a bot" framing (iterating)
+- [ ] First-person guard — deterministic check that the reply never uses "I/me/my…", with regenerate-then-fallback
+- [ ] Probe suite — adversarial prompts asserting: no first-person, correct "just a bot" self-answers, no trailing engagement question, still genuinely useful
+- [ ] Polish — UI, latency, child-facing error copy
+
+**Deferred to later milestones** (see the spec): content moderation, jailbreak/injection defense, crisis/self-harm escalation, parent alerts, auth/profiles, PWA install, session caps, logging. The code is shaped to add these as guards around the single model — none are built yet.
+
+> ⚠️ This is an early POC. It has **no safety guardrails yet** beyond the voice/persona — not suitable for real child use until the deferred work above lands.

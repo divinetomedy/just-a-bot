@@ -11,8 +11,27 @@ const MODEL = "claude-haiku-4-5"; // fast + cheap, right for a kids' chat POC
 const MAX_HISTORY = 20; // capped, in-memory only — no persistence
 const MAX_TOKENS = 1024; // keep replies short and costs low
 
-const SAFE_FALLBACK =
-  "This is just a bot — that one didn't work. Try asking again.";
+// Short, human-readable reason for a failure. err.status is a numeric HTTP
+// code (not a message), so map the common ones; fall back to the SDK error
+// name, then message, for anything unmapped (incl. network errors with no status).
+function describeError(err) {
+  const byStatus = {
+    400: "bad request",
+    401: "invalid API key",
+    403: "permission denied",
+    404: "model not found",
+    413: "request too large",
+    429: "rate limited",
+    500: "Anthropic server error",
+    529: "Anthropic overloaded",
+  };
+  if (err?.status && byStatus[err.status]) return byStatus[err.status];
+  if (err?.name?.includes("Connection")) return "connection failed";
+  return err?.name || err?.message || "unknown error";
+}
+
+const borked = (reason) =>
+  `Something is borked (${reason}) - failed to generate text.`;
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const PROMPT_PATH = join(__dirname, "system-prompt.md");
@@ -71,9 +90,12 @@ export async function generateReply({ message, history }) {
       .join("")
       .trim();
 
-    return { status: 200, body: { reply: reply || SAFE_FALLBACK } };
+    if (!reply) {
+      return { status: 502, body: { reply: borked("empty response") } };
+    }
+    return { status: 200, body: { reply } };
   } catch (err) {
     console.error("chat error:", err?.status ?? "", err?.message ?? err);
-    return { status: 502, body: { reply: SAFE_FALLBACK } };
+    return { status: 502, body: { reply: borked(describeError(err)) } };
   }
 }
