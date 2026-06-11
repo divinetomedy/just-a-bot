@@ -1,0 +1,35 @@
+<!-- @dsCard group="Brand" viewport="700x160" name="Logo" subtitle="Logomark, wordmark, and white variants" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="../styles.css">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: var(--font-sans); background: var(--color-bg); padding: 20px; display: flex; gap: 16px; align-items: stretch; }
+    .tile { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; padding: 20px; border-radius: var(--radius-lg); border: 1px solid var(--color-border); background: var(--color-surface); }
+    .tile.dark { background: var(--color-neutral-950); border-color: var(--color-neutral-800); }
+    .tile.blue { background: var(--color-green-400); border-color: transparent; }
+    .label { font-size: 10px; font-family: var(--font-mono); color: var(--color-text-muted); }
+    .tile.dark .label, .tile.blue .label { color: rgba(255,255,255,0.5); }
+  </style>
+</head>
+<body>
+  <div class="tile">
+    <img src="../assets/logo.svg" height="36" alt="Just A Bot logo">
+    <div class="label">logo.svg — light bg</div>
+  </div>
+  <div class="tile dark">
+    <img src="../assets/logo-white.svg" height="36" alt="Just A Bot logo white">
+    <div class="label">logo-white.svg — dark bg</div>
+  </div>
+  <div class="tile blue" style="background:var(--color-green-400);">
+    <img src="../assets/logo-white.svg" height="36" alt="Just A Bot logo white">
+    <div class="label">logo-white.svg — green bg</div>
+  </div>
+  <div class="tile" style="flex:0.5">
+    <img src="../assets/logomark.svg" height="44" alt="Just A Bot logomark">
+    <div class="label">logomark.svg</div>
+  </div>
+</body>
+</html>

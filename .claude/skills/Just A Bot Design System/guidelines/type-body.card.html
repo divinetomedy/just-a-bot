@@ -1,0 +1,37 @@
+<!-- @dsCard group="Type" viewport="700x200" name="Body & UI Text" subtitle="Body, body-lg, label, caption, code" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="../styles.css">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: var(--font-sans); background: var(--color-bg); padding: 20px; }
+    .row { display: flex; align-items: baseline; gap: 16px; padding: 7px 0; border-bottom: 1px solid var(--color-border); }
+    .row:last-child { border-bottom: none; }
+    .meta { flex-shrink: 0; width: 90px; font-size: 10px; font-family: var(--font-mono); color: var(--color-text-muted); }
+  </style>
+</head>
+<body>
+  <div class="row">
+    <div class="meta">body-lg / 18px</div>
+    <div style="font-size:var(--text-body-lg-size);font-weight:var(--text-body-lg-weight);line-height:var(--text-body-lg-leading);color:var(--color-text-primary)">Photosynthesis is how plants make food using sunlight, water, and carbon dioxide.</div>
+  </div>
+  <div class="row">
+    <div class="meta">body / 16px</div>
+    <div style="font-size:var(--text-body-size);font-weight:var(--text-body-weight);line-height:var(--text-body-leading);color:var(--color-text-primary)">Plants absorb sunlight through chlorophyll, converting it into glucose and releasing oxygen as a byproduct.</div>
+  </div>
+  <div class="row">
+    <div class="meta">label / 14px 500</div>
+    <div style="font-size:var(--text-label-size);font-weight:var(--text-label-weight);line-height:var(--text-label-leading);color:var(--color-text-secondary)">Science · Biology · Plants</div>
+  </div>
+  <div class="row">
+    <div class="meta">caption / 12px</div>
+    <div style="font-size:var(--text-caption-size);font-weight:var(--text-caption-weight);line-height:var(--text-caption-leading);color:var(--color-text-muted)">Source: Encyclopedia Britannica · Updated 2024</div>
+  </div>
+  <div class="row">
+    <div class="meta">code / mono</div>
+    <div style="font-family:var(--font-mono);font-size:var(--text-code-size);line-height:var(--text-code-leading);color:var(--color-blue-600);background:var(--color-blue-50);padding:2px 8px;border-radius:var(--radius-xs)">CO₂ + H₂O + light → C₆H₁₂O₆ + O₂</div>
+  </div>
+</body>
+</html>

@@ -1,95 +1,52 @@
-import { useEffect, useRef, useState } from "react";
-import ReactMarkdown from "react-markdown";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { useState } from "react";
+import { HomeView } from "@/views/HomeView";
+import { AnswerView } from "@/views/AnswerView";
 
-// Thin chat UI for JUST A BOT. Minimal: white background, black text.
-// No client-side safety logic — the frontend is just a window; everything
-// that matters happens server-side.
+// JUST A BOT — app shell.
+// A non-personal AI encyclopedia for kids. Home (ask) → Answer (read) → Back.
+// All safety logic lives server-side; the frontend is just a window.
 
 export default function App() {
-  const [messages, setMessages] = useState([]); // { role: "user"|"bot", text }
-  const [input, setInput] = useState("");
-  const [sending, setSending] = useState(false);
-  const endRef = useRef(null);
+  const [query, setQuery] = useState("");
+  const [view, setView] = useState("home");
 
-  useEffect(() => {
-    endRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages, sending]);
+  const handleSearch = (q) => {
+    setQuery(q);
+    setView("answer");
+  };
 
-  async function send(e) {
-    e?.preventDefault();
-    const text = input.trim();
-    if (!text || sending) return;
-
-    const nextMessages = [...messages, { role: "user", text }];
-    setMessages(nextMessages);
-    setInput("");
-    setSending(true);
-
-    try {
-      const history = nextMessages.map((m) => ({
-        role: m.role === "bot" ? "assistant" : "user",
-        content: m.text,
-      }));
-
-      const res = await fetch("/api/chat", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: text, history }),
-      });
-      const data = await res.json();
-      const reply = data.reply ?? "This is just a bot — something went wrong. Try again.";
-      setMessages((m) => [...m, { role: "bot", text: reply }]);
-    } catch {
-      setMessages((m) => [
-        ...m,
-        { role: "bot", text: "This is just a bot — the connection dropped. Try again." },
-      ]);
-    } finally {
-      setSending(false);
-    }
-  }
+  const handleBack = () => {
+    setView("home");
+    setQuery("");
+  };
 
   return (
-    <div className="mx-auto flex min-h-dvh max-w-xl flex-col px-6 py-10">
-      <header className="text-center">
-        <h1 className="text-3xl font-bold tracking-tight">JUST A BOT</h1>
-        <p className="mt-2 text-muted-foreground">
-          An AI encyclopedia for kids. NON-personal, NON-relational, NON-parasocial, NON-engagement-driven. Just clean answers.
-        </p>
+    <div className="app-shell">
+      <header className="app-header">
+        {view === "answer" ? (
+          <button className="back-btn" onClick={handleBack}>
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+              <path d="M11 4L6 9L11 14" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+            Back
+          </button>
+        ) : (
+          <span />
+        )}
+
+        <div className="header-logo">
+          <img src="/logomark.svg" width="24" height="24" alt="" />
+          <span className="header-logo-text">JUST A BOT</span>
+        </div>
       </header>
 
-      {messages.length > 0 && (
-        <div className="mt-8 flex flex-1 flex-col gap-3">
-          {messages.map((m, i) =>
-            m.role === "user" ? (
-              <div key={i} className="self-end rounded-2xl bg-secondary px-4 py-2">
-                {m.text}
-              </div>
-            ) : (
-              <div key={i} className="prose-chat self-start">
-                <ReactMarkdown>{m.text}</ReactMarkdown>
-              </div>
-            )
-          )}
-          {sending && <div className="self-start text-muted-foreground">…</div>}
-          <div ref={endRef} />
-        </div>
-      )}
-
-      <form onSubmit={send} className="mt-8 flex gap-2">
-        <Input
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          placeholder="Type a question"
-          aria-label="Your question"
-          autoComplete="off"
-        />
-        <Button type="submit" disabled={sending || !input.trim()}>
-          Send
-        </Button>
-      </form>
+      <main className="app-body">
+        {view === "home" ? (
+          <HomeView onSearch={handleSearch} />
+        ) : (
+          <AnswerView query={query} onBack={handleBack} onSearch={handleSearch} />
+        )}
+      </main>
     </div>
   );
 }

@@ -1,0 +1,32 @@
+<!-- @dsCard group="Colors" viewport="700x160" name="Semantic Colors" subtitle="Surface, text, border, interactive, status tokens" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="../styles.css">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: var(--font-sans); background: var(--color-bg); padding: 20px; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 8px; }
+    .token { display: flex; align-items: center; gap: 8px; padding: 7px 10px; background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-sm); }
+    .dot { width: 20px; height: 20px; border-radius: 50%; flex-shrink: 0; border: 1px solid rgba(0,0,0,0.06); }
+    .name { font-size: 10px; font-family: var(--font-mono); color: var(--color-text-secondary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  </style>
+</head>
+<body>
+  <div class="grid">
+    <div class="token"><div class="dot" style="background:var(--color-bg)"></div><div class="name">--color-bg</div></div>
+    <div class="token"><div class="dot" style="background:var(--color-surface)"></div><div class="name">--color-surface</div></div>
+    <div class="token"><div class="dot" style="background:var(--color-border)"></div><div class="name">--color-border</div></div>
+    <div class="token"><div class="dot" style="background:var(--color-accent)"></div><div class="name">--color-accent</div></div>
+    <div class="token"><div class="dot" style="background:var(--color-success)"></div><div class="name">--color-success</div></div>
+    <div class="token"><div class="dot" style="background:var(--color-warning)"></div><div class="name">--color-warning</div></div>
+    <div class="token"><div class="dot" style="background:var(--color-danger)"></div><div class="name">--color-danger</div></div>
+    <div class="token"><div class="dot" style="background:var(--color-info)"></div><div class="name">--color-info</div></div>
+    <div class="token"><div class="dot" style="background:var(--color-text-primary)"></div><div class="name">--color-text-primary</div></div>
+    <div class="token"><div class="dot" style="background:var(--color-text-secondary)"></div><div class="name">--color-text-secondary</div></div>
+    <div class="token"><div class="dot" style="background:var(--color-text-muted)"></div><div class="name">--color-text-muted</div></div>
+    <div class="token"><div class="dot" style="background:var(--color-accent-subtle)"></div><div class="name">--color-accent-subtle</div></div>
+  </div>
+</body>
+</html>

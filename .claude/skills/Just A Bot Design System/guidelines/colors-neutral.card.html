@@ -1,0 +1,44 @@
+<!-- @dsCard group="Colors" viewport="700x180" name="Neutral Scale" subtitle="Cool blue-tinted neutrals, 0–950" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="../styles.css">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: var(--font-sans); background: var(--color-bg); padding: 20px; }
+    .ramp { display: flex; gap: 4px; height: 56px; border-radius: var(--radius-md); overflow: hidden; border: 1px solid var(--color-border); }
+    .stop { flex: 1; }
+    .labels { display: flex; gap: 4px; margin-top: 6px; }
+    .label { flex: 1; text-align: center; font-size: 9.5px; color: var(--color-text-muted); font-family: var(--font-mono); }
+  </style>
+</head>
+<body>
+  <div class="ramp">
+    <div class="stop" style="background:var(--color-neutral-0)"></div>
+    <div class="stop" style="background:var(--color-neutral-50)"></div>
+    <div class="stop" style="background:var(--color-neutral-100)"></div>
+    <div class="stop" style="background:var(--color-neutral-200)"></div>
+    <div class="stop" style="background:var(--color-neutral-300)"></div>
+    <div class="stop" style="background:var(--color-neutral-400)"></div>
+    <div class="stop" style="background:var(--color-neutral-500)"></div>
+    <div class="stop" style="background:var(--color-neutral-600)"></div>
+    <div class="stop" style="background:var(--color-neutral-700)"></div>
+    <div class="stop" style="background:var(--color-neutral-800)"></div>
+    <div class="stop" style="background:var(--color-neutral-900)"></div>
+    <div class="stop" style="background:var(--color-neutral-950)"></div>
+  </div>
+  <div class="labels">
+    <div class="label">0</div><div class="label">50</div><div class="label">100</div>
+    <div class="label">200</div><div class="label">300</div><div class="label">400</div>
+    <div class="label">500</div><div class="label">600</div><div class="label">700</div>
+    <div class="label">800</div><div class="label">900</div><div class="label">950</div>
+  </div>
+  <div style="display:flex;gap:8px;margin-top:14px;align-items:center;">
+    <div style="flex:1;padding:8px 12px;background:var(--color-neutral-50);border-radius:var(--radius-sm);border:1px solid var(--color-border);font-size:var(--text-xs);color:var(--color-text-secondary);font-family:var(--font-sans);">--color-bg</div>
+    <div style="flex:1;padding:8px 12px;background:var(--color-neutral-0);border-radius:var(--radius-sm);border:1px solid var(--color-border);font-size:var(--text-xs);color:var(--color-text-secondary);font-family:var(--font-sans);">--color-surface</div>
+    <div style="flex:1;padding:8px 12px;background:var(--color-neutral-950);border-radius:var(--radius-sm);font-size:var(--text-xs);color:white;font-family:var(--font-sans);">--color-text-primary</div>
+    <div style="flex:1;padding:8px 12px;background:var(--color-neutral-400);border-radius:var(--radius-sm);font-size:var(--text-xs);color:white;font-family:var(--font-sans);">--color-text-muted</div>
+  </div>
+</body>
+</html>

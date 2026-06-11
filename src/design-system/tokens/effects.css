@@ -1,0 +1,108 @@
+/* ============================================================
+   JUST A BOT — Effects Tokens
+   (Border radii, shadows, transitions, z-index)
+   ============================================================ */
+
+:root {
+
+  /* ─── Border Radius ──────────────────────────────────────── */
+  --radius-none: 0px;
+  --radius-xs:   4px;
+  --radius-sm:   8px;
+  --radius-md:   12px;
+  --radius-lg:   16px;
+  --radius-xl:   20px;
+  --radius-2xl:  28px;
+  --radius-3xl:  36px;
+  --radius-full: 9999px;
+
+  /* ─── Component Radius Aliases ───────────────────────────── */
+  --radius-badge:   var(--radius-full);
+  --radius-button:  var(--radius-full);
+  --radius-input:   var(--radius-md);
+  --radius-card:    var(--radius-xl);
+  --radius-card-lg: var(--radius-2xl);
+  --radius-dialog:  var(--radius-2xl);
+  --radius-tooltip: var(--radius-sm);
+  --radius-tag:     var(--radius-full);
+  --radius-chip:    var(--radius-full);
+
+  /* ─── Border Width ───────────────────────────────────────── */
+  --border-thin:   1px;
+  --border-medium: 1.5px;
+  --border-thick:  2px;
+
+  /* ─── Shadows ────────────────────────────────────────────── */
+  /* Neutral shadows — subtle, slightly blue-tinted */
+  --shadow-xs:  0 1px 2px rgba(13, 16, 32, 0.05),
+                0 1px 1px rgba(13, 16, 32, 0.03);
+
+  --shadow-sm:  0 2px 4px rgba(13, 16, 32, 0.07),
+                0 1px 2px rgba(13, 16, 32, 0.05);
+
+  --shadow-md:  0 4px 12px rgba(13, 16, 32, 0.10),
+                0 2px 4px  rgba(13, 16, 32, 0.06);
+
+  --shadow-lg:  0 8px 24px rgba(13, 16, 32, 0.12),
+                0 3px 8px  rgba(13, 16, 32, 0.06);
+
+  --shadow-xl:  0 16px 48px rgba(13, 16, 32, 0.14),
+                0 6px 16px  rgba(13, 16, 32, 0.08);
+
+  --shadow-2xl: 0 32px 64px rgba(13, 16, 32, 0.18),
+                0 12px 24px rgba(13, 16, 32, 0.10);
+
+  /* Inner shadow — pressed / inset feel */
+  --shadow-inner: inset 0 2px 4px rgba(13, 16, 32, 0.08);
+
+  /* Colored glow shadows for interactive elements */
+  --shadow-glow-blue:   0 4px 20px rgba(26, 111, 255, 0.28),
+                        0 2px 6px  rgba(26, 111, 255, 0.18);
+  --shadow-glow-green:  0 4px 20px rgba(0, 200, 123, 0.28),
+                        0 2px 6px  rgba(0, 200, 123, 0.18);
+  --shadow-glow-orange: 0 4px 20px rgba(255, 92, 0,   0.28),
+                        0 2px 6px  rgba(255, 92, 0,   0.18);
+  --shadow-glow-purple: 0 4px 20px rgba(124, 58, 255, 0.28),
+                        0 2px 6px  rgba(124, 58, 255, 0.18);
+  --shadow-glow-pink:   0 4px 20px rgba(255, 62, 141, 0.28),
+                        0 2px 6px  rgba(255, 62, 141, 0.18);
+
+  /* ─── Transitions ────────────────────────────────────────── */
+  --duration-instant: 80ms;   /* @kind other */
+  --duration-fast:    150ms;  /* @kind other */
+  --duration-normal:  200ms;  /* @kind other */
+  --duration-slow:    300ms;  /* @kind other */
+  --duration-slower:  450ms;  /* @kind other */
+
+  --ease-default:   cubic-bezier(0.16, 1, 0.3, 1);    /* @kind other */
+  --ease-out:       cubic-bezier(0, 0, 0.2, 1);        /* @kind other */
+  --ease-in:        cubic-bezier(0.4, 0, 1, 1);        /* @kind other */
+  --ease-in-out:    cubic-bezier(0.4, 0, 0.2, 1);      /* @kind other */
+  --ease-bounce:    cubic-bezier(0.34, 1.56, 0.64, 1); /* @kind other */
+  --ease-linear:    linear;                             /* @kind other */
+
+  --transition-fast:   var(--duration-fast) var(--ease-default);    /* @kind other */
+  --transition-normal: var(--duration-normal) var(--ease-default);  /* @kind other */
+  --transition-slow:   var(--duration-slow) var(--ease-default);    /* @kind other */
+  --transition-bounce: var(--duration-normal) var(--ease-bounce);   /* @kind other */
+
+  /* ─── Z-index Scale ──────────────────────────────────────── */
+  --z-base:     0;    /* @kind other */
+  --z-raised:   10;   /* @kind other */
+  --z-dropdown: 100;  /* @kind other */
+  --z-sticky:   200;  /* @kind other */
+  --z-overlay:  300;  /* @kind other */
+  --z-modal:    400;  /* @kind other */
+  --z-toast:    500;  /* @kind other */
+  --z-tooltip:  600;  /* @kind other */
+
+  /* ─── Focus Ring ─────────────────────────────────────────── */
+  --focus-ring: 0 0 0 3px var(--color-green-100);  /* @kind shadow */
+  --focus-ring-offset: 2px;                        /* @kind spacing */
+  --focus-ring-color: var(--color-green-400);       /* @kind color */
+
+  /* ─── Opacity Scale ──────────────────────────────────────── */
+  --opacity-hover:    0.85;  /* @kind other */
+  --opacity-disabled: 0.42;  /* @kind other */
+  --opacity-muted:    0.60;  /* @kind other */
+}

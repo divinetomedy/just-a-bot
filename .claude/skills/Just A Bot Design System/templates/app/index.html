@@ -1,0 +1,109 @@
+<!-- @template name="App Screen" description="Interactive JUST A BOT encyclopedia — home search + bot answer screens" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Just A Bot</title>
+  <!-- React must load before ds-base.js -->
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+  <script src="./ds-base.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; font-family: var(--font-sans); background: var(--color-neutral-300, #BDC4DB); -webkit-font-smoothing: antialiased; }
+    #root { height: 100%; display: flex; align-items: center; justify-content: center; }
+    .app-shell { width: 390px; height: 780px; background: var(--color-bg, #F4F6FC); border-radius: 40px; overflow: hidden; display: flex; flex-direction: column; box-shadow: 0 32px 64px rgba(13,16,32,.18), 0 0 0 8px #222840; position: relative; }
+    .status-bar { display: flex; justify-content: space-between; align-items: center; padding: 14px 28px 0; flex-shrink: 0; }
+    .status-time { font-size: 15px; font-weight: 600; color: var(--color-text-primary, #0D1020); font-family: var(--font-sans); }
+    .app-header { display: flex; align-items: center; justify-content: space-between; padding: 10px 20px; flex-shrink: 0; border-bottom: 1px solid var(--color-border, #D8DDED); background: var(--color-surface, #fff); }
+    .header-logo { display: flex; align-items: center; gap: 8px; }
+    .header-logo-text { font-family: var(--font-sans); font-size: var(--text-base,1rem); font-weight: 700; color: var(--color-text-primary, #0D1020); letter-spacing: -0.015em; }
+    .back-btn { display: flex; align-items: center; gap: 6px; font-family: var(--font-sans); font-size: var(--text-sm,.875rem); font-weight: 500; color: var(--color-green-500, #00A863); background: none; border: none; cursor: pointer; padding: 6px 0; }
+    .app-body { flex: 1; overflow-y: auto; display: flex; flex-direction: column; scrollbar-width: none; }
+    .app-body::-webkit-scrollbar { display: none; }
+    @keyframes fadeIn { from { opacity:0; transform:translateY(6px); } to { opacity:1; transform:translateY(0); } }
+  </style>
+</head>
+<body>
+<div id="root"></div>
+
+<script type="text/babel" src="HomeView.jsx"></script>
+<script type="text/babel" src="AnswerView.jsx"></script>
+
+<script type="text/babel">
+  function App() {
+    const ds = window.JustABotDesignSystem_d87885;
+    if (!ds) return null;
+    const { Button } = ds;
+    const [query, setQuery] = React.useState(
+      () => sessionStorage.getItem('jab_query') || ''
+    );
+    const [view, setView] = React.useState(
+      () => sessionStorage.getItem('jab_query') ? 'answer' : 'home'
+    );
+    const [time] = React.useState(() => {
+      const d = new Date();
+      return d.getHours().toString().padStart(2,'0') + ':' + d.getMinutes().toString().padStart(2,'0');
+    });
+
+    const handleSearch = (q) => {
+      sessionStorage.setItem('jab_query', q);
+      setQuery(q); setView('answer');
+    };
+    const handleBack = () => {
+      sessionStorage.removeItem('jab_query');
+      setView('home'); setQuery('');
+    };
+
+    return (
+      <div className="app-shell">
+        <div className="status-bar">
+          <span className="status-time">{time}</span>
+          <div style={{display:'flex',gap:6,alignItems:'center'}}>
+            <div style={{width:14,height:10,background:'var(--color-text-primary)',borderRadius:2,opacity:.8}}></div>
+            <div style={{width:22,height:11,borderRadius:2,border:'1.5px solid var(--color-text-primary)',background:'transparent',position:'relative'}}>
+              <div style={{position:'absolute',left:2,top:2,bottom:2,width:'65%',background:'var(--color-text-primary)',borderRadius:1}}></div>
+              <div style={{position:'absolute',right:-4,top:3,width:3,height:5,background:'var(--color-neutral-400)',borderRadius:1}}></div>
+            </div>
+          </div>
+        </div>
+
+        <div className="app-header">
+          {view === 'answer'
+            ? <button className="back-btn" onClick={handleBack}>
+                <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M11 4L6 9L11 14" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                Back
+              </button>
+            : <div className="header-logo">
+                <img src="../../assets/logomark.svg" width="24" height="24" alt="bot"/>
+                <span className="header-logo-text">JUST A BOT</span>
+              </div>
+          }
+          {view === 'answer' && (
+            <div className="header-logo">
+              <img src="../../assets/logomark.svg" width="22" height="22" alt="bot"/>
+              <span className="header-logo-text" style={{fontSize:'var(--text-sm,.875rem)'}}>JUST A BOT</span>
+            </div>
+          )}
+        </div>
+
+        <div className="app-body">
+          {view === 'home'
+            ? <HomeView onSearch={handleSearch} />
+            : <AnswerView query={query} onBack={handleBack} onSearch={handleSearch} />
+          }
+        </div>
+      </div>
+    );
+  }
+
+  // Mount once the DS bundle is available (retry against load races)
+  window.addEventListener('load', function mount() {
+    if (!window.JustABotDesignSystem_d87885) return setTimeout(mount, 50);
+    ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+  });
+</script>
+</body>
+</html>

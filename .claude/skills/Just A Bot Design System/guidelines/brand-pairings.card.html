@@ -1,0 +1,38 @@
+<!-- @dsCard group="Brand" viewport="700x160" name="Color Pairings" subtitle="Approved background + text + accent combinations" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="../styles.css">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: var(--font-sans); background: var(--color-bg); padding: 20px; display: flex; gap: 10px; }
+    .tile { flex: 1; padding: 16px; border-radius: var(--radius-lg); display: flex; flex-direction: column; gap: 6px; }
+    .headline { font-size: var(--text-base); font-weight: var(--font-weight-bold); }
+    .sub      { font-size: var(--text-xs); opacity: 0.75; }
+    .pill     { display: inline-block; padding: 3px 10px; border-radius: var(--radius-full); font-size: var(--text-xs); font-weight: var(--font-weight-semibold); align-self: flex-start; margin-top: 2px; }
+  </style>
+</head>
+<body>
+  <div class="tile" style="background:var(--color-neutral-0);border:1px solid var(--color-border)">
+    <div class="headline" style="color:var(--color-neutral-950)">Light surface</div>
+    <div class="sub" style="color:var(--color-text-secondary)">White + dark text</div>
+    <div class="pill" style="background:var(--color-green-400);color:white">Primary</div>
+  </div>
+  <div class="tile" style="background:var(--color-neutral-950)">
+    <div class="headline" style="color:white">Dark surface</div>
+    <div class="sub" style="color:rgba(255,255,255,0.55)">Dark + light text</div>
+    <div class="pill" style="background:var(--color-green-400);color:white">Primary</div>
+  </div>
+  <div class="tile" style="background:var(--color-green-400)">
+    <div class="headline" style="color:white">Brand green</div>
+    <div class="sub" style="color:rgba(255,255,255,0.75)">Hero, CTAs, highlights</div>
+    <div class="pill" style="background:white;color:var(--color-green-700)">White pill</div>
+  </div>
+  <div class="tile" style="background:var(--color-green-50)">
+    <div class="headline" style="color:var(--color-green-800)">Green tint</div>
+    <div class="sub" style="color:var(--color-green-600)">Subtle brand surface</div>
+    <div class="pill" style="background:var(--color-green-400);color:white">Accent</div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!-- @dsCard group="Type" viewport="700x260" name="Display & Headings" subtitle="Space Grotesk — display through h4" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="../styles.css">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: var(--font-sans); background: var(--color-bg); padding: 20px; }
+    .row { display: flex; align-items: baseline; gap: 16px; padding: 8px 0; border-bottom: 1px solid var(--color-border); }
+    .row:last-child { border-bottom: none; }
+    .meta { flex-shrink: 0; width: 80px; font-size: 10px; font-family: var(--font-mono); color: var(--color-text-muted); }
+    .sample { flex: 1; color: var(--color-text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  </style>
+</head>
+<body>
+  <div class="row">
+    <div class="meta">display / 72px</div>
+    <div class="sample" style="font-size:var(--text-display-size);font-weight:var(--text-display-weight);line-height:var(--text-display-leading);letter-spacing:var(--text-display-tracking)">Just A Bot</div>
+  </div>
+  <div class="row">
+    <div class="meta">h1 / 44px</div>
+    <div class="sample" style="font-size:var(--text-h1-size);font-weight:var(--text-h1-weight);line-height:var(--text-h1-leading);letter-spacing:var(--text-h1-tracking)">What is a black hole?</div>
+  </div>
+  <div class="row">
+    <div class="meta">h2 / 36px</div>
+    <div class="sample" style="font-size:var(--text-h2-size);font-weight:var(--text-h2-weight);line-height:var(--text-h2-leading)">How do volcanoes form?</div>
+  </div>
+  <div class="row">
+    <div class="meta">h3 / 30px</div>
+    <div class="sample" style="font-size:var(--text-h3-size);font-weight:var(--text-h3-weight);line-height:var(--text-h3-leading)">Why is the sky blue?</div>
+  </div>
+  <div class="row">
+    <div class="meta">h4 / 24px</div>
+    <div class="sample" style="font-size:var(--text-h4-size);font-weight:var(--text-h4-weight);line-height:var(--text-h4-leading)">The water cycle explained</div>
+  </div>
+</body>
+</html>

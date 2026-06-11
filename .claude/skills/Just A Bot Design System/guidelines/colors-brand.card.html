@@ -1,0 +1,51 @@
+<!-- @dsCard group="Colors" viewport="700x180" name="Brand Colors" subtitle="Blue, Green, Orange, Yellow, Purple, Pink" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="../styles.css">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: var(--font-sans); background: var(--color-bg); padding: 20px; }
+    .palette { display: flex; gap: 10px; flex-wrap: wrap; }
+    .swatch-group { display: flex; flex-direction: column; gap: 3px; flex: 1; min-width: 80px; }
+    .swatch { height: 44px; border-radius: var(--radius-md); }
+    .swatch-name { font-size: var(--text-xs); font-weight: var(--font-weight-semibold); color: var(--color-text-secondary); }
+    .swatch-val  { font-size: 10px; color: var(--color-text-muted); font-family: var(--font-mono); }
+  </style>
+</head>
+<body>
+  <div class="palette">
+    <div class="swatch-group">
+      <div class="swatch" style="background:var(--color-blue-500)"></div>
+      <div class="swatch-name">Blue</div>
+      <div class="swatch-val">#1A6FFF</div>
+    </div>
+    <div class="swatch-group">
+      <div class="swatch" style="background:var(--color-green-400)"></div>
+      <div class="swatch-name">Green</div>
+      <div class="swatch-val">#00C87B</div>
+    </div>
+    <div class="swatch-group">
+      <div class="swatch" style="background:var(--color-orange-500)"></div>
+      <div class="swatch-name">Orange</div>
+      <div class="swatch-val">#FF5C00</div>
+    </div>
+    <div class="swatch-group">
+      <div class="swatch" style="background:var(--color-yellow-400)"></div>
+      <div class="swatch-name">Yellow</div>
+      <div class="swatch-val">#FFC400</div>
+    </div>
+    <div class="swatch-group">
+      <div class="swatch" style="background:var(--color-purple-500)"></div>
+      <div class="swatch-name">Purple</div>
+      <div class="swatch-val">#7C3AFF</div>
+    </div>
+    <div class="swatch-group">
+      <div class="swatch" style="background:var(--color-pink-500)"></div>
+      <div class="swatch-name">Pink</div>
+      <div class="swatch-val">#FF3E8D</div>
+    </div>
+  </div>
+</body>
+</html>

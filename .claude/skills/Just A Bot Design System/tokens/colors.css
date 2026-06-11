@@ -1,0 +1,127 @@
+/* ============================================================
+   JUST A BOT — Color Tokens
+   ============================================================ */
+
+:root {
+
+  /* ─── Brand Colors ─────────────────────────────────────── */
+  --color-blue-50:  #EBF2FF;
+  --color-blue-100: #D3E5FF;
+  --color-blue-200: #A8C9FF;
+  --color-blue-300: #70A8FF;
+  --color-blue-400: #3D87FF;
+  --color-blue-500: #1A6FFF;
+  --color-blue-600: #1059D8;
+  --color-blue-700: #0944B0;
+  --color-blue-800: #063088;
+  --color-blue-900: #032168;
+
+  --color-green-50:  #E6FAF3;
+  --color-green-100: #C8F3E4;
+  --color-green-200: #8EE6C7;
+  --color-green-300: #47D3A3;
+  --color-green-400: #00C87B;
+  --color-green-500: #00A863;
+  --color-green-600: #00874E;
+  --color-green-700: #00673B;
+  --color-green-800: #004828;
+  --color-green-900: #002E19;
+
+  --color-orange-50:  #FFF0E9;
+  --color-orange-100: #FFD8C4;
+  --color-orange-200: #FFB490;
+  --color-orange-300: #FF8B58;
+  --color-orange-400: #FF6A28;
+  --color-orange-500: #FF5C00;
+  --color-orange-600: #D44D00;
+  --color-orange-700: #A83C00;
+  --color-orange-800: #7C2C00;
+  --color-orange-900: #511D00;
+
+  --color-yellow-50:  #FFFAE6;
+  --color-yellow-100: #FFF2C0;
+  --color-yellow-200: #FFE480;
+  --color-yellow-300: #FFD440;
+  --color-yellow-400: #FFC400;
+  --color-yellow-500: #E0AD00;
+  --color-yellow-600: #B88E00;
+  --color-yellow-700: #8F6F00;
+  --color-yellow-800: #665000;
+  --color-yellow-900: #3D3000;
+
+  --color-purple-50:  #F0EBFF;
+  --color-purple-100: #DDD3FF;
+  --color-purple-200: #BBA6FF;
+  --color-purple-300: #9673FF;
+  --color-purple-400: #8A55FF;
+  --color-purple-500: #7C3AFF;
+  --color-purple-600: #6629E0;
+  --color-purple-700: #501BB8;
+  --color-purple-800: #3B1090;
+  --color-purple-900: #270868;
+
+  --color-pink-50:  #FFE9F3;
+  --color-pink-100: #FFD0E7;
+  --color-pink-200: #FFA0CE;
+  --color-pink-300: #FF70B3;
+  --color-pink-400: #FF549E;
+  --color-pink-500: #FF3E8D;
+  --color-pink-600: #D42D75;
+  --color-pink-700: #A81F5D;
+  --color-pink-800: #7C1344;
+  --color-pink-900: #500A2D;
+
+  /* ─── Neutrals (cool, slightly blue-tinted) ─────────────── */
+  --color-neutral-0:   #FFFFFF;
+  --color-neutral-50:  #F4F6FC;
+  --color-neutral-100: #EAEDF7;
+  --color-neutral-200: #D8DDED;
+  --color-neutral-300: #BDC4DB;
+  --color-neutral-400: #9AA2BF;
+  --color-neutral-500: #6E789A;
+  --color-neutral-600: #4E5672;
+  --color-neutral-700: #353D5A;
+  --color-neutral-800: #222840;
+  --color-neutral-900: #141829;
+  --color-neutral-950: #0D1020;
+
+  /* ─── Semantic Surface & Text ─────────────────────────────── */
+  --color-bg:             var(--color-neutral-50);
+  --color-bg-raised:      var(--color-neutral-0);
+  --color-surface:        var(--color-neutral-0);
+  --color-surface-subtle: var(--color-neutral-50);
+  --color-surface-muted:  var(--color-neutral-100);
+
+  --color-text-primary:   var(--color-neutral-950);
+  --color-text-secondary: var(--color-neutral-600);
+  --color-text-muted:     var(--color-neutral-400);
+  --color-text-disabled:  var(--color-neutral-300);
+  --color-text-on-dark:   var(--color-neutral-0);
+
+  --color-border:         var(--color-neutral-200);
+  --color-border-strong:  var(--color-neutral-300);
+  --color-border-focus:   var(--color-green-400);
+
+  /* ─── Semantic Interactive ────────────────────────────────── */
+  --color-accent:           var(--color-green-400);
+  --color-accent-hover:     var(--color-green-500);
+  --color-accent-active:    var(--color-green-600);
+  --color-accent-subtle:    var(--color-green-50);
+  --color-accent-fg:        var(--color-neutral-0);
+
+  --color-success:          var(--color-green-400);
+  --color-success-subtle:   var(--color-green-50);
+  --color-success-fg:       var(--color-green-700);
+
+  --color-warning:          var(--color-yellow-400);
+  --color-warning-subtle:   var(--color-yellow-50);
+  --color-warning-fg:       var(--color-yellow-700);
+
+  --color-danger:           #FF3B30;
+  --color-danger-subtle:    #FFF0EE;
+  --color-danger-fg:        #C0261C;
+
+  --color-info:             var(--color-blue-500);
+  --color-info-subtle:      var(--color-blue-50);
+  --color-info-fg:          var(--color-blue-700);
+}

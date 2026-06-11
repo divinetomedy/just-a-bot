@@ -1,0 +1,26 @@
+<!-- @dsCard group="Spacing" viewport="700x140" name="Border Radius" subtitle="xs through full — bubbly and rounded" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="../styles.css">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: var(--font-sans); background: var(--color-bg); padding: 20px; display: flex; align-items: flex-end; gap: 14px; flex-wrap: wrap; }
+    .step { display: flex; flex-direction: column; align-items: center; gap: 7px; }
+    .box { width: 52px; height: 52px; background: var(--color-green-50); border: 2px solid var(--color-green-300); }
+    .label { font-size: 10px; font-family: var(--font-mono); color: var(--color-text-muted); text-align: center; }
+  </style>
+</head>
+<body>
+  <div class="step"><div class="box" style="border-radius:var(--radius-none)"></div><div class="label">none·0</div></div>
+  <div class="step"><div class="box" style="border-radius:var(--radius-xs)"></div><div class="label">xs·4px</div></div>
+  <div class="step"><div class="box" style="border-radius:var(--radius-sm)"></div><div class="label">sm·8px</div></div>
+  <div class="step"><div class="box" style="border-radius:var(--radius-md)"></div><div class="label">md·12px</div></div>
+  <div class="step"><div class="box" style="border-radius:var(--radius-lg)"></div><div class="label">lg·16px</div></div>
+  <div class="step"><div class="box" style="border-radius:var(--radius-xl)"></div><div class="label">xl·20px</div></div>
+  <div class="step"><div class="box" style="border-radius:var(--radius-2xl)"></div><div class="label">2xl·28px</div></div>
+  <div class="step"><div class="box" style="border-radius:var(--radius-3xl)"></div><div class="label">3xl·36px</div></div>
+  <div class="step"><div class="box" style="border-radius:var(--radius-full)"></div><div class="label">full·∞</div></div>
+</body>
+</html>

@@ -1,0 +1,27 @@
+<!-- @dsCard group="Spacing" viewport="700x140" name="Shadows" subtitle="xs through 2xl + colored glow variants" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="../styles.css">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: var(--font-sans); background: var(--color-bg); padding: 24px; display: flex; gap: 14px; flex-wrap: wrap; align-items: flex-end; }
+    .step { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+    .box { width: 56px; height: 56px; background: white; border-radius: var(--radius-md); }
+    .label { font-size: 10px; font-family: var(--font-mono); color: var(--color-text-muted); }
+  </style>
+</head>
+<body>
+  <div class="step"><div class="box" style="box-shadow:var(--shadow-xs)"></div><div class="label">xs</div></div>
+  <div class="step"><div class="box" style="box-shadow:var(--shadow-sm)"></div><div class="label">sm</div></div>
+  <div class="step"><div class="box" style="box-shadow:var(--shadow-md)"></div><div class="label">md</div></div>
+  <div class="step"><div class="box" style="box-shadow:var(--shadow-lg)"></div><div class="label">lg</div></div>
+  <div class="step"><div class="box" style="box-shadow:var(--shadow-xl)"></div><div class="label">xl</div></div>
+  <div class="step"><div class="box" style="box-shadow:var(--shadow-2xl)"></div><div class="label">2xl</div></div>
+  <div class="step" style="margin-left:8px"><div class="box" style="box-shadow:var(--shadow-glow-blue);background:var(--color-blue-500)"></div><div class="label">glow-blue</div></div>
+  <div class="step"><div class="box" style="box-shadow:var(--shadow-glow-green);background:var(--color-green-400)"></div><div class="label">glow-green</div></div>
+  <div class="step"><div class="box" style="box-shadow:var(--shadow-glow-purple);background:var(--color-purple-500)"></div><div class="label">glow-purple</div></div>
+  <div class="step"><div class="box" style="box-shadow:var(--shadow-glow-pink);background:var(--color-pink-500)"></div><div class="label">glow-pink</div></div>
+</body>
+</html>

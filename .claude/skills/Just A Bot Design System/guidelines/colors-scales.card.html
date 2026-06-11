@@ -1,0 +1,51 @@
+<!-- @dsCard group="Colors" viewport="700x200" name="Blue Scale" subtitle="Full 50–900 ramp" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="../styles.css">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: var(--font-sans); background: var(--color-bg); padding: 20px; }
+    .ramp { display: flex; gap: 4px; height: 60px; border-radius: var(--radius-md); overflow: hidden; }
+    .stop { flex: 1; display: flex; align-items: flex-end; justify-content: center; padding-bottom: 6px; }
+    .stop span { font-size: 10px; font-family: var(--font-mono); font-weight: 600; }
+    .labels { display: flex; gap: 4px; margin-top: 6px; }
+    .label { flex: 1; text-align: center; font-size: 10px; color: var(--color-text-muted); font-family: var(--font-mono); }
+  </style>
+</head>
+<body>
+  <div class="ramp">
+    <div class="stop" style="background:var(--color-blue-50)"></div>
+    <div class="stop" style="background:var(--color-blue-100)"></div>
+    <div class="stop" style="background:var(--color-blue-200)"></div>
+    <div class="stop" style="background:var(--color-blue-300)"></div>
+    <div class="stop" style="background:var(--color-blue-400)"></div>
+    <div class="stop" style="background:var(--color-blue-500)"><span style="color:white">500</span></div>
+    <div class="stop" style="background:var(--color-blue-600)"></div>
+    <div class="stop" style="background:var(--color-blue-700)"></div>
+    <div class="stop" style="background:var(--color-blue-800)"></div>
+    <div class="stop" style="background:var(--color-blue-900)"></div>
+  </div>
+  <div class="labels">
+    <div class="label">50</div><div class="label">100</div><div class="label">200</div>
+    <div class="label">300</div><div class="label">400</div><div class="label">500</div>
+    <div class="label">600</div><div class="label">700</div><div class="label">800</div>
+    <div class="label">900</div>
+  </div>
+  <div style="display:flex;gap:4px;margin-top:12px;">
+    <div style="flex:1;height:32px;background:var(--color-green-400);border-radius:var(--radius-sm)"></div>
+    <div style="flex:1;height:32px;background:var(--color-orange-500);border-radius:var(--radius-sm)"></div>
+    <div style="flex:1;height:32px;background:var(--color-yellow-400);border-radius:var(--radius-sm)"></div>
+    <div style="flex:1;height:32px;background:var(--color-purple-500);border-radius:var(--radius-sm)"></div>
+    <div style="flex:1;height:32px;background:var(--color-pink-500);border-radius:var(--radius-sm)"></div>
+  </div>
+  <div style="display:flex;gap:4px;margin-top:4px;">
+    <div style="flex:1;text-align:center;font-size:10px;color:var(--color-text-muted);font-family:var(--font-mono)">green-400</div>
+    <div style="flex:1;text-align:center;font-size:10px;color:var(--color-text-muted);font-family:var(--font-mono)">orange-500</div>
+    <div style="flex:1;text-align:center;font-size:10px;color:var(--color-text-muted);font-family:var(--font-mono)">yellow-400</div>
+    <div style="flex:1;text-align:center;font-size:10px;color:var(--color-text-muted);font-family:var(--font-mono)">purple-500</div>
+    <div style="flex:1;text-align:center;font-size:10px;color:var(--color-text-muted);font-family:var(--font-mono)">pink-500</div>
+  </div>
+</body>
+</html>

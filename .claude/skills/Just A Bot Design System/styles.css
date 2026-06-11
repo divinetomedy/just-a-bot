@@ -1,0 +1,10 @@
+/* ============================================================
+   JUST A BOT — Design System Entry Point
+   This file is @import-only. Never add inline rules here.
+   ============================================================ */
+
+@import './tokens/fonts.css';
+@import './tokens/colors.css';
+@import './tokens/typography.css';
+@import './tokens/spacing.css';
+@import './tokens/effects.css';
