@@ -1,12 +1,13 @@
 // JUST A BOT — Answer View
-// Displays the bot answer with a loading state and related questions.
+// Renders the conversation thread: each question with its answer card, and a
+// follow-up field at the bottom. Asking a follow-up scrolls the new question
+// near the top of the screen, leaving the previous answer peeking above it.
 //
-// The answer text comes from the real /api/chat backend. The topic badge and
-// "Keep exploring" chips are design elements only — there is no backend behind
-// them yet, so the topic is a lightweight keyword guess and the related
-// questions are fixed starter suggestions.
+// Answer text comes from the real /api/chat backend (threaded in App). The
+// topic badge is a design element only — a lightweight client-side keyword
+// guess, not backend-driven.
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import ReactMarkdown from "react-markdown";
 import { Badge, Card, LoadingDots } from "@/design-system";
 import { AskBar } from "@/views/AskBar";
@@ -31,47 +32,17 @@ function guessTopic(query) {
   return { topic: 'Knowledge', color: 'blue' };
 }
 
-export function AnswerView({ query, onSearch }) {
-  const [loading, setLoading] = useState(true);
-  const [answer, setAnswer] = useState('');
-  const [error, setError] = useState(false);
-  const meta = guessTopic(query);
+export function AnswerView({ turns, onSearch }) {
+  const lastQuestionRef = useRef(null);
+  const anyLoading = turns.some(t => t.status === 'loading');
 
+  // On a follow-up, bring the newest question near the top so the previous
+  // answer just peeks in above it. The first question stays at the top.
   useEffect(() => {
-    let cancelled = false;
-    setLoading(true);
-    setAnswer('');
-    setError(false);
-
-    (async () => {
-      try {
-        const res = await fetch('/api/chat', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            message: query,
-            history: [{ role: 'user', content: query }],
-          }),
-        });
-        const data = await res.json();
-        if (cancelled) return;
-        if (data.reply) {
-          setAnswer(data.reply);
-        } else {
-          setError(true);
-          setAnswer('This is just a bot — something went wrong. Try again.');
-        }
-      } catch {
-        if (cancelled) return;
-        setError(true);
-        setAnswer('This is just a bot — the connection dropped. Try again.');
-      } finally {
-        if (!cancelled) setLoading(false);
-      }
-    })();
-
-    return () => { cancelled = true; };
-  }, [query]);
+    if (turns.length > 1 && lastQuestionRef.current) {
+      lastQuestionRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }, [turns.length]);
 
   return (
     <div style={{
@@ -84,62 +55,84 @@ export function AnswerView({ query, onSearch }) {
     }}>
       <div style={{ width: '100%', maxWidth: 600 }}>
 
-        {/* Question heading */}
-        <h2 style={{
-          fontFamily: 'var(--font-sans)',
-          fontSize: 'var(--text-2xl)',
-          fontWeight: 'var(--font-weight-bold)',
-          color: 'var(--color-text-primary)',
-          lineHeight: 'var(--leading-snug)',
-          marginBottom: 24,
-          letterSpacing: 'var(--tracking-snug)',
-        }}>{query}</h2>
+        {turns.map((turn, i) => {
+          const meta = guessTopic(turn.question);
+          const isLast = i === turns.length - 1;
+          const loading = turn.status === 'loading';
+          const error = turn.status === 'error';
 
-        {/* Answer card */}
-        <Card padding="lg" style={{ marginBottom: 28 }}>
-          <div style={{ display: 'flex', alignItems: 'flex-start', gap: 14 }}>
-            {/* Bot avatar */}
-            <div style={{
-              width: 36, height: 36, borderRadius: 'var(--radius-md)',
-              background: 'var(--color-green-400)',
-              display: 'flex', alignItems: 'center', justifyContent: 'center',
-              flexShrink: 0,
-            }}>
-              <img src="/logomark-white.svg" width="22" height="22" alt="bot" />
-            </div>
+          // Reserve a near-viewport-height block for the newest follow-up so its
+          // question can always scroll up to the top, even while the answer is
+          // still loading and short.
+          const reserve = isLast && i > 0;
 
-            <div style={{ flex: 1, minWidth: 0 }}>
-              {loading
-                ? (
-                  <div style={{ paddingTop: 6 }}>
-                    <LoadingDots size="md" color="green" />
+          return (
+            <div key={turn.id} style={reserve ? { minHeight: 'calc(100dvh - 120px)' } : undefined}>
+              {/* Question heading. scrollMarginTop clears the sticky header
+                  (~70px) and leaves ~50px of the previous answer peeking. */}
+              <h2
+                ref={isLast ? lastQuestionRef : null}
+                style={{
+                  scrollMarginTop: 120,
+                  fontFamily: 'var(--font-sans)',
+                  fontSize: 'var(--text-2xl)',
+                  fontWeight: 'var(--font-weight-bold)',
+                  color: 'var(--color-text-primary)',
+                  lineHeight: 'var(--leading-snug)',
+                  marginTop: i === 0 ? 0 : 8,
+                  marginBottom: 20,
+                  letterSpacing: 'var(--tracking-snug)',
+                }}
+              >{turn.question}</h2>
+
+              {/* Answer card */}
+              <Card padding="lg" style={{ marginBottom: 32 }}>
+                <div style={{ display: 'flex', alignItems: 'flex-start', gap: 14 }}>
+                  {/* Bot avatar */}
+                  <div style={{
+                    width: 36, height: 36, borderRadius: 'var(--radius-md)',
+                    background: 'var(--color-green-400)',
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    flexShrink: 0,
+                  }}>
+                    <img src="/logomark-white.svg" width="22" height="22" alt="bot" />
                   </div>
-                )
-                : (
-                  <div style={{ animation: 'fadeIn 0.3s ease' }}>
-                    {!error && (
-                      <Badge color={meta.color} size="sm"
-                        style={{ marginBottom: 12 }}>
-                        {meta.topic}
-                      </Badge>
-                    )}
-                    <div className="prose-chat" style={{
-                      fontFamily: 'var(--font-sans)',
-                      fontSize: 'var(--text-body-size)',
-                      lineHeight: 'var(--leading-relaxed)',
-                      color: 'var(--color-text-primary)',
-                    }}>
-                      <ReactMarkdown>{answer}</ReactMarkdown>
-                    </div>
-                  </div>
-                )
-              }
-            </div>
-          </div>
-        </Card>
 
-        {/* Follow-up question */}
-        {!loading && (
+                  <div style={{ flex: 1, minWidth: 0 }}>
+                    {loading
+                      ? (
+                        <div style={{ paddingTop: 6 }}>
+                          <LoadingDots size="md" color="green" />
+                        </div>
+                      )
+                      : (
+                        <div style={{ animation: 'fadeIn 0.3s ease' }}>
+                          {!error && (
+                            <Badge color={meta.color} size="sm"
+                              style={{ marginBottom: 12 }}>
+                              {meta.topic}
+                            </Badge>
+                          )}
+                          <div className="prose-chat" style={{
+                            fontFamily: 'var(--font-sans)',
+                            fontSize: 'var(--text-body-size)',
+                            lineHeight: 'var(--leading-relaxed)',
+                            color: 'var(--color-text-primary)',
+                          }}>
+                            <ReactMarkdown>{turn.answer}</ReactMarkdown>
+                          </div>
+                        </div>
+                      )
+                    }
+                  </div>
+                </div>
+              </Card>
+            </div>
+          );
+        })}
+
+        {/* Follow-up question — builds on the conversation above. */}
+        {!anyLoading && (
           <div style={{ animation: 'fadeIn 0.4s ease 0.1s both' }}>
             <AskBar placeholder="Tell me more" onSubmit={onSearch} />
           </div>

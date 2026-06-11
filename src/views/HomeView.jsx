@@ -51,7 +51,7 @@ export function HomeView({ onSearch }) {
         textAlign: 'center',
         marginBottom: 36,
         lineHeight: 'var(--leading-normal)',
-      }}>Clean answers. No fluff. No follows.</p>
+      }}>An AI encyclopedia for kids. Totally de-humanized. Takes the “I” out of AI.</p>
 
       {/* Search bar */}
       <div style={{ width: '100%', maxWidth: 480, marginBottom: 28 }}>

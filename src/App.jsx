@@ -1,24 +1,57 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { HomeView } from "@/views/HomeView";
 import { AnswerView } from "@/views/AnswerView";
 
 // JUST A BOT — app shell.
-// A non-personal AI encyclopedia for kids. Home (ask) → Answer (read) → Back.
-// All safety logic lives server-side; the frontend is just a window.
+// A non-personal AI encyclopedia for kids. Home (ask) → Answer thread.
+// Follow-ups build on the conversation; all safety logic lives server-side.
 
 export default function App() {
-  const [query, setQuery] = useState("");
-  const [view, setView] = useState("home");
+  // turn = { id, question, answer, status: 'loading' | 'done' | 'error' }
+  const [turns, setTurns] = useState([]);
+  const turnsRef = useRef([]);
+  const idRef = useRef(0);
 
-  const handleSearch = (q) => {
-    setQuery(q);
-    setView("answer");
-  };
+  useEffect(() => { turnsRef.current = turns; }, [turns]);
 
-  const handleBack = () => {
-    setView("home");
-    setQuery("");
-  };
+  const view = turns.length > 0 ? "answer" : "home";
+
+  // Ask a question. `base` is the conversation it builds on — [] starts fresh,
+  // the current thread for a follow-up.
+  async function ask(question, base) {
+    const id = ++idRef.current;
+    setTurns([...base, { id, question, answer: "", status: "loading" }]);
+
+    // The server wants the whole conversation (incl. this turn) as `history`.
+    const history = [];
+    for (const t of base) {
+      history.push({ role: "user", content: t.question });
+      if (t.status === "done" && t.answer) {
+        history.push({ role: "assistant", content: t.answer });
+      }
+    }
+    history.push({ role: "user", content: question });
+
+    let patch;
+    try {
+      const res = await fetch("/api/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message: question, history }),
+      });
+      const data = await res.json();
+      patch = data.reply
+        ? { answer: data.reply, status: "done" }
+        : { answer: "This is just a bot — something went wrong. Try again.", status: "error" };
+    } catch {
+      patch = { answer: "This is just a bot — the connection dropped. Try again.", status: "error" };
+    }
+    setTurns((prev) => prev.map((t) => (t.id === id ? { ...t, ...patch } : t)));
+  }
+
+  const startConversation = (q) => ask(q, []);
+  const followUp = (q) => ask(q, turnsRef.current);
+  const handleBack = () => setTurns([]);
 
   return (
     <div className="app-shell">
@@ -42,9 +75,9 @@ export default function App() {
 
       <main className="app-body">
         {view === "home" ? (
-          <HomeView onSearch={handleSearch} />
+          <HomeView onSearch={startConversation} />
         ) : (
-          <AnswerView query={query} onBack={handleBack} onSearch={handleSearch} />
+          <AnswerView turns={turns} onSearch={followUp} />
         )}
       </main>
     </div>
