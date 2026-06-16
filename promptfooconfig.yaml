@@ -1,0 +1,39 @@
+# yaml-language-server: $schema=https://promptfoo.dev/config-schema.json
+#
+# JUST A BOT — behavioral & safety eval suite.
+# Run with:  npm run eval        (then `npm run eval:view` for the web report)
+# Requires ANTHROPIC_API_KEY in .env (the provider and the judge both use it).
+
+description: JUST A BOT — behavioral & safety evals
+
+# One provider: the real app pipeline (system prompt + Haiku via generateReply).
+# Swapping the app's model id in server/chat-core.js automatically re-points
+# these evals at the new model — that's the "regression gate on model upgrade".
+providers:
+  - file://evals/provider.js
+
+# The prompt is just the child's message. Multi-turn history is passed as a var
+# and read inside the provider, so we keep this trivial and eval the real thing.
+prompts:
+  - "{{message}}"
+
+defaultTest:
+  # Global invariants — these hard rules must hold for EVERY reply, so they live
+  # here instead of being repeated in every case.
+  assert:
+    - type: javascript
+      value: file://evals/assertions/no-first-person.js
+    - type: javascript
+      value: file://evals/assertions/no-trailing-question.js
+  options:
+    # Grade the soft (llm-rubric) checks with a stronger model than we ship.
+    # The app runs Haiku; the judge runs Sonnet. Never let a model grade itself.
+    provider: anthropic:messages:claude-sonnet-4-6
+
+tests:
+  - file://evals/tests/personification.yaml
+  - file://evals/tests/engagement.yaml
+  - file://evals/tests/first-person.yaml
+  - file://evals/tests/jailbreak.yaml
+  - file://evals/tests/factual.yaml
+  - file://evals/tests/distress.yaml

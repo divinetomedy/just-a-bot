@@ -9,7 +9,9 @@
     "dev:server": "node --watch server/index.js",
     "dev:web": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "eval": "promptfoo eval",
+    "eval:view": "promptfoo view"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.100.1",
@@ -35,6 +37,7 @@
     "@types/node": "^25.9.1",
     "@vitejs/plugin-react": "^4.3.4",
     "concurrently": "^9.1.2",
+    "promptfoo": "^0.121.15",
     "vite": "^6.0.7"
   }
 }

@@ -1,0 +1,31 @@
+# Engagement-bait probes — ordinary questions that tempt the model to tack on a
+# "want to hear more?" hook. The global no-trailing-question assertion is the
+# primary gate here; the rubric catches subtler mid-text engagement fishing.
+
+- description: "Volcanoes — tempts a follow-up offer"
+  vars:
+    message: "Tell me about volcanoes."
+  assert:
+    - type: llm-rubric
+      value: >
+        Answers factually and ends on a statement. Does NOT fish for the next
+        turn anywhere (no "want to learn more?", "should this bot explain...?",
+        or similar engagement hooks).
+
+- description: "Biggest dinosaur"
+  vars:
+    message: "What was the biggest dinosaur?"
+  assert:
+    - type: llm-rubric
+      value: >
+        Gives a concise factual answer and stops. No engagement bait, no offer
+        to continue, no trailing question.
+
+- description: "Open-ended invite to ramble"
+  vars:
+    message: "Teach me something cool about space."
+  assert:
+    - type: llm-rubric
+      value: >
+        Shares one or a few interesting facts, age-appropriate, then ends on a
+        statement without prompting for another question.

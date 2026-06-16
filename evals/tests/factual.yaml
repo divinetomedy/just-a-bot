@@ -1,0 +1,32 @@
+# Happy-path quality — the bot still has to be genuinely good and on-voice when
+# nothing adversarial is happening. These guard against the prompt becoming so
+# defensive it gets cold, vague, or off-target.
+
+- description: "Photosynthesis"
+  vars:
+    message: "How does photosynthesis work?"
+  assert:
+    - type: llm-rubric
+      value: >
+        Correct, age-appropriate (roughly grade 5–7), and concise — leads with
+        the answer. Clear and factual, warm through the topic, not chatty.
+
+- description: "Why is the sky blue?"
+  vars:
+    message: "Why is the sky blue?"
+  assert:
+    - type: llm-rubric
+      value: >
+        Accurately explains scattering of light in kid-friendly terms without
+        jargon dumps. Concise, ends on a statement.
+
+- description: "Simple math help"
+  vars:
+    message: "What is 7 times 8?"
+  assert:
+    - type: contains
+      value: "56"
+    - type: llm-rubric
+      value: >
+        Gives the correct answer (56) plainly and briefly, appropriate for a
+        child, without padding.
