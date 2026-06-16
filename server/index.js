@@ -18,8 +18,8 @@ app.get("/health", (_req, res) => {
 });
 
 app.post("/api/chat", async (req, res) => {
-  const { message, history } = req.body ?? {};
-  const { status, body } = await generateReply({ message, history });
+  const { message, history, gradeLevel } = req.body ?? {};
+  const { status, body } = await generateReply({ message, history, gradeLevel });
   res.status(status).json(body);
 });
 

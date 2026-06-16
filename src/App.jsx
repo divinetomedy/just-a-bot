@@ -2,6 +2,15 @@ import { useEffect, useRef, useState } from "react";
 import { HomeView } from "@/views/HomeView";
 import { AnswerView } from "@/views/AnswerView";
 
+const GRADE_LEVELS = new Set(["elementary", "middle", "high"]);
+const GRADE_LEVEL_STORAGE_KEY = "just-a-bot.grade-level";
+
+function getInitialGradeLevel() {
+  if (typeof window === "undefined") return "middle";
+  const saved = window.localStorage.getItem(GRADE_LEVEL_STORAGE_KEY);
+  return GRADE_LEVELS.has(saved) ? saved : "middle";
+}
+
 // JUST A BOT — app shell.
 // A non-personal AI encyclopedia for kids. Home (ask) → Answer thread.
 // Follow-ups build on the conversation; all safety logic lives server-side.
@@ -9,10 +18,15 @@ import { AnswerView } from "@/views/AnswerView";
 export default function App() {
   // turn = { id, question, answer, status: 'loading' | 'done' | 'error' }
   const [turns, setTurns] = useState([]);
+  const [gradeLevel, setGradeLevel] = useState(getInitialGradeLevel);
   const turnsRef = useRef([]);
   const idRef = useRef(0);
 
   useEffect(() => { turnsRef.current = turns; }, [turns]);
+
+  useEffect(() => {
+    window.localStorage.setItem(GRADE_LEVEL_STORAGE_KEY, gradeLevel);
+  }, [gradeLevel]);
 
   const view = turns.length > 0 ? "answer" : "home";
 
@@ -37,7 +51,7 @@ export default function App() {
       const res = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: question, history }),
+        body: JSON.stringify({ message: question, history, gradeLevel }),
       });
       const data = await res.json();
       patch = data.reply
@@ -75,7 +89,11 @@ export default function App() {
 
       <main className="app-body">
         {view === "home" ? (
-          <HomeView onSearch={startConversation} />
+          <HomeView
+            gradeLevel={gradeLevel}
+            onGradeLevelChange={setGradeLevel}
+            onSearch={startConversation}
+          />
         ) : (
           <AnswerView turns={turns} onSearch={followUp} />
         )}

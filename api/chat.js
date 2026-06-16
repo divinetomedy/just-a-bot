@@ -10,7 +10,7 @@ export default async function handler(req, res) {
     return;
   }
 
-  const { message, history } = req.body ?? {};
-  const { status, body } = await generateReply({ message, history });
+  const { message, history, gradeLevel } = req.body ?? {};
+  const { status, body } = await generateReply({ message, history, gradeLevel });
   res.status(status).json(body);
 }

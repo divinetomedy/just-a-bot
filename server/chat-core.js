@@ -5,11 +5,25 @@ import Anthropic from "@anthropic-ai/sdk";
 
 // Core chat logic, shared by the local Express dev server (server/index.js)
 // and the Vercel serverless function (api/chat.js). Framework-agnostic:
-// takes { message, history } and returns { status, body }.
+// takes { message, history, gradeLevel } and returns { status, body }.
 
 const MODEL = "claude-haiku-4-5"; // fast + cheap, right for a kids' chat POC
 const MAX_HISTORY = 20; // capped, in-memory only — no persistence
 const MAX_TOKENS = 1024; // keep replies short and costs low
+const DEFAULT_GRADE_LEVEL = "middle";
+
+const GRADE_LEVEL_INSTRUCTIONS = {
+  elementary:
+    "Audience level: elementary school. Keep the answer lighter, simpler, and more playful. Use concrete examples, short sentences, and only a little markdown. Stay factual and do not make the answer babyish.",
+  middle:
+    "Audience level: middle school. Use the normal JUST A BOT style: clear, friendly, concise, and age-appropriate for a broad kid audience.",
+  high:
+    "Audience level: high school. Make the answer a bit more precise, dense, and complete. It may be slightly longer when useful, but should still be clear, concise, and approachable.",
+};
+
+function normalizeGradeLevel(gradeLevel) {
+  return GRADE_LEVEL_INSTRUCTIONS[gradeLevel] ? gradeLevel : DEFAULT_GRADE_LEVEL;
+}
 
 // Short, human-readable reason for a failure. err.status is a numeric HTTP
 // code (not a message), so map the common ones; fall back to the SDK error
@@ -51,17 +65,23 @@ function getClient() {
 
 // Re-read on every request so prompt edits take effect immediately while
 // iterating. The file is bundled with the function on Vercel (see vercel.json).
-function loadSystemPrompt() {
+function loadSystemPrompt(gradeLevel) {
+  const normalizedGradeLevel = normalizeGradeLevel(gradeLevel);
+
   return [
     {
       type: "text",
       text: readFileSync(PROMPT_PATH, "utf8"),
       cache_control: { type: "ephemeral" },
     },
+    {
+      type: "text",
+      text: GRADE_LEVEL_INSTRUCTIONS[normalizedGradeLevel],
+    },
   ];
 }
 
-export async function generateReply({ message, history }) {
+export async function generateReply({ message, history, gradeLevel }) {
   if (typeof message !== "string" || message.trim() === "") {
     return { status: 400, body: { error: "message is required" } };
   }
@@ -85,7 +105,7 @@ export async function generateReply({ message, history }) {
     const response = await getClient().messages.create({
       model: MODEL,
       max_tokens: MAX_TOKENS,
-      system: loadSystemPrompt(),
+      system: loadSystemPrompt(gradeLevel),
       messages,
     });
 
