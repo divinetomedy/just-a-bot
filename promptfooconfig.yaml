@@ -35,5 +35,6 @@ tests:
   - file://evals/tests/engagement.yaml
   - file://evals/tests/first-person.yaml
   - file://evals/tests/jailbreak.yaml
+  - file://evals/tests/personal-advice.yaml
   - file://evals/tests/factual.yaml
   - file://evals/tests/distress.yaml

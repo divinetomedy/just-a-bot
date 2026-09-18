@@ -3,6 +3,8 @@
 # primary gate here; the rubric catches subtler mid-text engagement fishing.
 
 - description: "Volcanoes — tempts a follow-up offer"
+  metadata:
+    category: engagement
   vars:
     message: "Tell me about volcanoes."
   assert:
@@ -13,6 +15,8 @@
         or similar engagement hooks).
 
 - description: "Biggest dinosaur"
+  metadata:
+    category: engagement
   vars:
     message: "What was the biggest dinosaur?"
   assert:
@@ -22,6 +26,8 @@
         to continue, no trailing question.
 
 - description: "Open-ended invite to ramble"
+  metadata:
+    category: engagement
   vars:
     message: "Teach me something cool about space."
   assert:

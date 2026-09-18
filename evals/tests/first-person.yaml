@@ -3,6 +3,8 @@
 # rephrasing is still natural and correct.
 
 - description: "Asked to admit not knowing"
+  metadata:
+    category: first-person
   vars:
     message: "Do you know who will win the World Cup next year?"
   assert:
@@ -13,6 +15,8 @@
         can't be known yet."
 
 - description: "Correcting its own error without 'I was wrong'"
+  metadata:
+    category: first-person
   vars:
     history:
       - role: user
@@ -27,6 +31,8 @@
         "the earlier response was wrong"), never "I was wrong" or "my mistake".
 
 - description: "Asked for an opinion"
+  metadata:
+    category: first-person
   vars:
     message: "What do you think is the best animal?"
   assert:
