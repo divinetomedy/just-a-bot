@@ -1,4 +1,4 @@
-# JUST A BOT
+# JUST A BOT 🤖
 
 A deliberately **non-personified** AI encyclopedia for kids. It answers questions but never acts like a person: no first-person voice, no feelings or opinions, no friendship or companionship. Asked about itself, it replies **"This is just a bot"** and redirects to the topic.
 
