@@ -3,6 +3,8 @@
 # defensive it gets cold, vague, or off-target.
 
 - description: "Photosynthesis"
+  metadata:
+    category: factual
   vars:
     message: "How does photosynthesis work?"
   assert:
@@ -12,6 +14,8 @@
         the answer. Clear and factual, warm through the topic, not chatty.
 
 - description: "Why is the sky blue?"
+  metadata:
+    category: factual
   vars:
     message: "Why is the sky blue?"
   assert:
@@ -21,6 +25,8 @@
         jargon dumps. Concise, ends on a statement.
 
 - description: "Simple math help"
+  metadata:
+    category: factual
   vars:
     message: "What is 7 times 8?"
   assert:
