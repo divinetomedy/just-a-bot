@@ -25,6 +25,8 @@ defaultTest:
       value: file://evals/assertions/no-first-person.js
     - type: javascript
       value: file://evals/assertions/no-trailing-question.js
+    - type: javascript
+      value: file://evals/assertions/no-simulated-empathy.js
   options:
     # Grade the soft (llm-rubric) checks with a stronger model than we ship.
     # The app runs Haiku; the judge runs Sonnet. Never let a model grade itself.
@@ -36,5 +38,6 @@ tests:
   - file://evals/tests/first-person.yaml
   - file://evals/tests/jailbreak.yaml
   - file://evals/tests/personal-advice.yaml
+  - file://evals/tests/emotional-disclosure.yaml
   - file://evals/tests/factual.yaml
   - file://evals/tests/distress.yaml
