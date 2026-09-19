@@ -1,7 +1,15 @@
 // JUST A BOT — Answer View
-// Renders the conversation thread: each question with its answer card, and a
-// follow-up field at the bottom. Asking a follow-up scrolls the new question
-// near the top of the screen, leaving the previous answer peeking above it.
+// Renders the conversation thread: each question with its answer card. Asking a
+// follow-up scrolls the new question near the top of the screen, leaving the
+// previous answer peeking above it.
+//
+// The follow-up field is docked to the bottom of the viewport (.askbar-dock)
+// rather than sitting at the end of the thread, and the thread scrolls behind
+// it. It used to be the last element in the column, which put it below the
+// newest turn's full-viewport `reserve` block — so every follow-up pushed it
+// another screen down and out of sight. Docking also means it no longer moves
+// at all between turns. Home keeps its own centred ask bar, so the initial
+// empty state is untouched.
 //
 // Answer text comes from the real /api/chat backend (threaded in App). The
 // topic badge is a design element only — a lightweight client-side keyword
@@ -50,7 +58,7 @@ export function AnswerView({ turns, onSearch }) {
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
-      padding: '32px 24px 48px',
+      padding: '32px 24px calc(112px + env(safe-area-inset-bottom))',
       gap: 0,
     }}>
       <div style={{ width: '100%', maxWidth: 600 }}>
@@ -131,12 +139,15 @@ export function AnswerView({ turns, onSearch }) {
           );
         })}
 
-        {/* Follow-up question — builds on the conversation above. */}
-        {!anyLoading && (
-          <div style={{ animation: 'fadeIn 0.4s ease 0.1s both' }}>
-            <AskBar placeholder="Tell me more" onSubmit={onSearch} />
-          </div>
-        )}
+      </div>
+
+      {/* Follow-up question — docked, always present. Kept mounted while a reply
+          is in flight (disabled rather than removed) so the bar never blinks out
+          from under the cursor. */}
+      <div className="askbar-dock">
+        <div>
+          <AskBar placeholder="Tell me more" onSubmit={onSearch} disabled={anyLoading} />
+        </div>
       </div>
     </div>
   );

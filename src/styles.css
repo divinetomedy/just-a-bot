@@ -91,6 +91,31 @@ body {
   margin: 0 auto;
 }
 
+/* The follow-up ask bar, pinned to the bottom of the viewport with the thread
+   scrolling behind it. Only the Answer view docks a bar — Home keeps its ask
+   bar in the centred hero, so the empty state is unaffected.
+
+   The gradient fades the thread out behind the bar instead of cutting it off
+   mid-line. pointer-events is off on the backdrop so that fade doesn't swallow
+   clicks on the answer underneath, and back on for the bar itself. */
+.askbar-dock {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: var(--z-sticky);
+  padding: 20px 24px calc(16px + env(safe-area-inset-bottom));
+  background: linear-gradient(to bottom, transparent, var(--color-bg) 45%);
+  pointer-events: none;
+}
+
+.askbar-dock > * {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  pointer-events: auto;
+}
+
 @keyframes fadeIn {
   from {
     opacity: 0;
