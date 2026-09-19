@@ -5,10 +5,11 @@
 import React, { useState } from "react";
 import { Button } from "@/design-system";
 
-export function AskBar({ placeholder = "What is a black hole?", onSubmit, autoFocus = false }) {
+export function AskBar({ placeholder = "What is a black hole?", onSubmit, autoFocus = false, disabled = false }) {
   const [query, setQuery] = useState("");
 
   const submit = () => {
+    if (disabled) return;
     const text = query.trim();
     if (text) {
       onSubmit(text);
@@ -32,6 +33,7 @@ export function AskBar({ placeholder = "What is a black hole?", onSubmit, autoFo
         autoFocus={autoFocus}
         placeholder={placeholder}
         value={query}
+        disabled={disabled}
         onChange={e => setQuery(e.target.value)}
         onKeyDown={e => e.key === 'Enter' && submit()}
         style={{
@@ -45,7 +47,7 @@ export function AskBar({ placeholder = "What is a black hole?", onSubmit, autoFo
           minWidth: 0,
         }}
       />
-      <Button variant="primary" size="md" onClick={submit}>Ask</Button>
+      <Button variant="primary" size="md" disabled={disabled} onClick={submit}>Ask</Button>
     </div>
   );
 }
